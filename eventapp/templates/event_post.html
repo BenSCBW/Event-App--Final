@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+<style>
+.overlay {
+ 	 opacity:0.8;
+ 	 position:relative;
+ 	 padding:10px;
+ 	 top:-360px;
+ 	 z-index:2;
+ 	 margin:0auto;
+ 	 width:75%;
+ 	 border-radius:5px;
+ }
+ #hoverimg{
+     float:left;
+     position:relative;
+   }
+ #hoverimg:hover img{
+     height: 300px;
+   }
+</style>
+
+{% block content %}
+
+<p></p>
+<p></p>
+<p></p>
+<div class="overlay">
+      <h1 style="text-align:center;"><img src="static/icons/medal.png"  width="40" height="40">{{ post.title }}</h1>
+</div>
+<hr>
+
+<div class="container">
+  <div class="row">
+      <hr>
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+          <h1><img src="static/icons/description1.png"  width="40" height="40"><i class="glyphicon glyphicon-adjust"></i> About event</h1>
+          <h5 align="center">{{post.text}}</h5>
+          <br>
+          <br>
+          <p></p>
+          <p></p>
+          <p></p>
+          <div id="hoverimg">
+            <img src="static/photos/{{post.pic}}" width="300" height="300">
+          </div>
+      </div>
+
+      <div class="col-md-6">
+          <h1><img src="static/icons/pin.png"  width="40" height="40"><i class="glyphicon glyphicon-beaker"></i>Location</h1>
+             <h5 align="center">{{post.city}}</h5>
+             <h5 align="center">{{post.address}}</h5>
+             <h5 align="center">{{post.time}}</h5>
+          <br>
+          <br>
+      </div>
+
+  </div>
+</div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="del_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Post Pop up Modal</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this event post?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <form action="{{ url_for('event_posts.delete_post', event_post_id=post.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<hr>
+  {% if current_user.is_authenticated %}
+  <h3 align="center">Tell us what do you think about this event</h3>
+  <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+    <div class="horizontal">
+      <label for="comment">Comment:</label>
+       {{ form.comment(class="form-control form-control-lg ") }}
+       <div class="form-horizontal" align="center">
+         <p></p>
+           {{ form.submit(class="btn btn-outline-info") }}
+       </div>
+    </div>
+  {% endif %}
+<h3>Review</h3>
+{% if post.comments %}
+<hr>
+  <div class="container" align="center">
+      <div class="row" align="center">
+          <div class="col-8">
+              <div class="card card-white post">
+                {% if post.comments.count() > 0 %}
+                {% for comment in post.comments %}
+                <br>
+                <hr>
+
+                  <div class="post-heading" align="center">
+                      <div class="float-left image">
+                          <img src="{{ url_for('static', filename='profile_pics/' + comment.author.profile_image) }}" class="img-circle avatar" alt="user profile image">
+                      </div>
+                      <div class="float-left meta">
+                          <div class="title h5">
+                              <b>{{ comment.author.username }}</b>
+
+                          </div>
+                          <h6 class="text-muted time"></h6>
+                      </div>
+                  </div>
+                  <div class="post-description" >
+                      <h5>Said: {{ comment.body }} </h5>
+                  </div>
+                  <div class="post-footing" align="right" >
+                  {% if comment.author == current_user %}
+                  <a class="btn btn-secondary" href="{{ url_for('event_posts.update_comment', event_post_id=post.id, comment_id=comment.id) }}">Update</a>
+      						<a class="btn btn-secondary" align="right" href="{{ url_for('event_posts.delete_comment', event_post_id=post.id, comment_id=comment.id) }}">Delete</a>
+      						{% endif %}
+                  </div>
+
+              {% endfor %}
+                          </p>
+              {% endif %}
+{% endif %}
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+{% endblock content %}

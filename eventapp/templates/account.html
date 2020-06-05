@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<style>
+#avatar{
+vertical-align: middle;
+width: 80%;
+height: 80%;
+border-radius: 50%;
+}
+</style>
+<h1>Edit Profile</h1>
+<hr>
+
+<div class="container col-md-4" align="center">
+  <div align='center'>
+    <img id="avatar" alt "avatar" align='center' src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}">
+    <p>{{ current_user.email }}</p>
+  </div>
+</div>
+<hr>
+<div class="container col-md-4" align="center">
+    <form class= "form-horizontal" method="POST" action = "" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+  <div class="form-group">
+    {{ form.username.label(class="form-group", align="center") }}
+    {{ form.username(class='form-control')  }}
+
+  <div class="form-group">
+    {{ form.email.label(class="form-group") }}
+    {{ form.email(class='form-control')  }}
+  </div>
+  <hr>
+  <div class="form-group" align="center">
+    {{ form.picture.label(class="form-group") }}
+    {{ form.picture(class="form-control-file") }}
+  </div>
+  <hr>
+  <div class="form-group container col-md-4">
+    {{ form.submit(class="btn btn-primary") }}
+  </div>
+</form>
+</div>
+
+
+
+{% endblock content %}

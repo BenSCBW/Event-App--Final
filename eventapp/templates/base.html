@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+  </head>
+
+  <style>
+  .nav-link{
+     text-align: right;
+  }
+
+  .nav-item{
+    color: white;
+  text-shadow: 2px 2px 4px #FFFFFF;
+  }
+
+
+    .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  padding-bottom:90px
+  background-color: red;
+  color: white;
+  text-align: center;
+}
+
+    .navbar-custom {
+        background-color: #FFD447;
+    }
+
+
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-text {
+        color: White;
+    }
+    .content{
+      padding-bottom:90px
+    }
+    </style>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-yellow navbar-custom static-top shadow p-3 mb-5 rounded">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand disabled"href="#">EventApp</a>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active"><a class="nav-link" href="{{ url_for('core.index') }}">Home <span class="sr-only">(current)</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('core.info') }}">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('core.contact') }}">Give Us Feedback</a></li>
+        {% if current_user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('event_posts.create_post') }}">Create Post</a></li>
+        <div class="collapse navbar-collapse" id="navbar-list-4">
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+          <img src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}" width="40" height="40" class="rounded-circle">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ url_for('users.account') }}">Account</a>
+          <a class="dropdown-item" href="{{ url_for('users.logout') }}">Log Out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Log in</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+
+    </div>
+  </nav>
+
+<div class="container shadow p-3 mb-5 rounded">
+  {% block content %}
+
+  {% endblock %}
+</div>
+
+
+<div class="footer">
+  <div class="contain">
+    <div class="social-menu">
+      <ul>
+        <li><a href=""><i class="fa fa-facebook"></i></a></li>
+        <li><a href=""><i class="fa fa-twitter"></i></a></li>
+        <li><a href=""><i class="fa fa-instagram"></i></a></li>
+        <li><a href=""><i class="fa fa-youtube"></i></a></li>
+        <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

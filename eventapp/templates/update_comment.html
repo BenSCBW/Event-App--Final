@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<p></p>
+<p></p>
+<p></p>
+<h1>Edit your Comment</h1>
+<hr>
+<div class="container col-md-4" align="center">
+  <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <div class="form-horizontal">
+	{{ form.comment(class="form-control form-control-lg ") }}
+     </div>
+	 {{ form.submit(class="btn btn-outline-info") }}
+  </form>
+
+</div>
+
+{% endblock content%}

@@ -1,0 +1,81 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+{% extends "base.html" %}
+{% block content %}
+
+<div class="firmalar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="firma-card row">
+                    <div class="col-md-5 img-padding-no">
+                        <div class="firma-resim">
+                            <a href="#">
+                            </a>
+                        </div>
+                    </div>
+                    {# Go through each event post #}
+                    {% for post in event_posts.items %}
+                    <div class="col-md-7">
+                        <div class="firma-aciklama card-body">
+                            <h4>{{ post.text[:100] }}</h4>
+                            <ul class="yacht-info__list space-2">
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Location: {{ post.location }}</span>
+                                </li>
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Date: {{ post.time }}</span>
+                                </li>
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Kaptanlı</span>
+                                </li>
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Kaptanlı</span>
+                                </li>
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Kaptanlı</span>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="firma-card row">
+                    <div class="col-md-5 img-padding-no">
+                        <div class="firma-resim">
+                            <a href="#">
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <a href="{{ url_for('event_posts.event_post', event_post_id=post.id) }}" class="btn btn-primary">Check this event</a>
+        </div>
+           {% endfor %}
+    </div>
+    </div>
+    <nav aria-label="Page navigation example">
+     <ul class="pagination justify-content-center">
+       {% for page_num in event_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if event_posts.page == page_num %}
+          <li class="page-item disabled">
+            <a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a></li>
+          </li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a></li>
+          {% endif %}
+      {% endfor %}
+    </nav>
+
+    {% endblock content %}

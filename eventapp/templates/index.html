@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+.image69{
+  max-width: 100%; height: auto;
+}
+  .firma-card{
+  background: #fff;
+  border: 1px solid;
+  border-color: #c7bdbd40;
+  margin: 1rem auto;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px -1px rgb(198, 207, 234);
+  margin-bottom: 1.6%;
+  overflow: hidden;
+}
+.firma-resim{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+}
+.firmalar{
+  background: white;
+}
+
+@media (max-width: 768px) {
+
+  .firma-logo{
+        width: calc(33.66667% - .75rem);
+        height: 6.5rem;
+        margin: 5px .375rem;
+  }
+  .firma-resim {
+    position: relative;
+    z-index: 0;
+    height: 1000px;
+  }
+  .img-padding-no{
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}
+
+</style>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+<ul class="carousel-indicators">
+  <li data-target="#demo" data-slide-to="0" class="active"></li>
+  <li data-target="#demo" data-slide-to="1"></li>
+  <li data-target="#demo" data-slide-to="2"></li>
+</ul>
+<div class="carousel-inner">
+  <div class="carousel-item active">
+    <img src="static/banners/pozadina.jpg" alt="Los Angeles" width="1100" height="300">
+    <div class="carousel-caption">
+      <h3>Use Event Site to inform people about your event!</h3>
+      <p>Tom :"This site has changed my life!"</p>
+    </div>
+  </div>
+  <div class="carousel-item">
+    <img src="static/banners/pozadina_2.jpg" alt="England" width="1100" height="300">
+    <div class="carousel-caption">
+      <h3>Shanghai</h3>
+      <p>Thank you, Shanghai!</p>
+    </div>
+  </div>
+  <div class="carousel-item">
+    <img src="static/banners/pozadina_4.jpg" alt="New York" width="1100" height="300">
+    <div class="carousel-caption">
+      <h3>New York</h3>
+      <p>We love the Big Apple!</p>
+    </div>
+  </div>
+</div>
+<a class="carousel-control-prev" href="#demo" data-slide="prev">
+  <span class="carousel-control-prev-icon"></span>
+</a>
+<a class="carousel-control-next" href="#demo" data-slide="next">
+  <span class="carousel-control-next-icon"></span>
+</a>
+</div>
+
+<div class="jumbotron" >
+  <h1>Event App</h1>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search">
+    <div class="input-group-append">
+      <button class="btn btn-secondary" type="button">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="firmalar">
+    <div class="container">
+      {# Go through each event post #}
+      {% for post in event_posts.items %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="firma-card row">
+                    <div class="col-md-5 img-padding-no">
+                        <div class="firma-resim">
+                          <img src="static/photos/{{post.pic}}" class="image69" width="100%" height= "auto" >
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="firma-aciklama card-body">
+                            <h4>{{ post.title }}</h4>
+                            <ul class="yacht-info__list space-2">
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Location: {{ post.city }}</span>
+                                </li>
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Starting Date: {{ post.time_start }}</span>
+                                </li>
+                                <li>
+                                    <i class="search-boat-icon fa search-captain vertical-align-mid"></i>
+                                    <span class="vertical-align-mid">Ending Date: {{ post.time_end }}</span>
+                                </li>
+                                <div class="col-md-2" align="center"></div>
+                                <a href="{{ url_for('event_posts.event_post', event_post_id=post.id) }}" class="btn btn-primary">Check this event</a>
+                            </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           {% endfor %}
+    </div>
+    </div>
+    <nav aria-label="Page navigation example">
+     <ul class="pagination justify-content-center">
+       {% for page_num in event_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if event_posts.page == page_num %}
+          <li class="page-item disabled">
+            <a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a></li>
+          </li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a></li>
+          {% endif %}
+      {% endfor %}
+    </nav>
+
+    {% endblock content %}

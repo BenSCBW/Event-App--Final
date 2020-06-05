@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<p></p>
+<p></p>
+<p></p>
+<h1>Edit your event</h1>
+<hr>
+<div class="container col-md-4" align="center">
+  <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+     {{ form.hidden_tag() }}
+
+     <div class="form-horizontal">
+     <h6>Name of event</h6>
+     {{ form.title(class="form-control form-control-lg ") }}
+     </div>
+     <div class="form-horizontal">
+     <h6>About event</h6>
+     {{ form.text(class="form-control form-control-lg") }}
+     </div>
+     <div class="form-horizontal">
+     <h6>In which city?</h6>
+     {{ form.city(class="form-control form-control-lg") }}
+     </div>
+     <div class="form-horizontal">
+     <h6>Address</h6>
+     {{ form.address(class="form-control form-control-lg") }}
+     </div>
+     <div class="form-horizontal">
+     <h6>Starting date</h6>
+     {{ form.time(class="form-control form-control-lg") }}
+     </div>
+     <div class="form-horizontal">
+     <h6>Leave a contact number or e-mail address</h6>
+     {{ form.contact(class="form-control form-control-lg") }}
+     </div>
+     <h6>Picture</h6>
+     {{ form.pic(class="form-control form-control-lg") }}
+     </div>
+     <div class="form-horizontal" align="center">
+       <p></p>
+         {{ form.submit(class="btn btn-outline-info") }}
+     </div>
+  </form>
+
+</div>
+
+{% endblock content%}
